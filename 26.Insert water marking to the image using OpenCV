@@ -1,0 +1,19 @@
+import cv2
+
+img = cv2.imread("C:/Users/KOWSALYA/Desktop/cvimage/ex11img.jpg")
+wm = cv2.imread("C:/Users/KOWSALYA/Desktop/cvimage/watermark.jfif")
+h_wm, w_wm = wm.shape[:2]
+
+# Extracting height and width separately
+cy, cx = img.shape[:2]
+cy //= 2
+cx //= 2
+
+ty, tx, by, bx = cy - h_wm // 2, cx - w_wm // 2, cy + h_wm // 2, cx + w_wm // 2
+roi = img[ty:by, tx:bx]
+img[ty:by, tx:bx] = cv2.addWeighted(roi, 1, wm, 0.3, 0)
+
+cv2.imshow("Watermarked Image", img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
